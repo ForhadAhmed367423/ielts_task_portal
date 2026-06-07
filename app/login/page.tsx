@@ -1,0 +1,51 @@
+"use client";
+
+import { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
+export default function Login() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      toast.success("Login success");
+      router.push("/dashboard");
+    } catch (err: any) {
+      toast.error(err.message);
+    }
+  };
+
+  return (
+    <div className="h-screen flex items-center justify-center">
+      <div className="p-6 bg-white shadow rounded w-80">
+        <h1 className="text-xl font-bold mb-4">Login</h1>
+
+        <input
+          className="border p-2 w-full mb-2"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          className="border p-2 w-full mb-2"
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button
+          onClick={login}
+          className="bg-blue-500 text-white w-full p-2"
+        >
+          Login
+        </button>
+      </div>
+    </div>
+  );
+}
