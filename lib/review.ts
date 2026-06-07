@@ -1,10 +1,5 @@
 import { db } from "./firebase";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  Timestamp,
-} from "firebase/firestore";
+import { collection, addDoc, getDocs, Timestamp } from "firebase/firestore";
 
 export const addReview = async (data: any) => {
   return await addDoc(collection(db, "reviews"), {
